@@ -1,6 +1,7 @@
 module IvoryTower
   class Base
-    extend AllowedUnits
+    extend AllowedUnits::ClassMethods
+
     allows :air_units, :ground_units, :sea_units
 
     def initialize(health)

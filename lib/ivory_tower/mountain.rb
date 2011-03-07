@@ -1,6 +1,6 @@
 module IvoryTower
-  class Meadow
+  class Mountain
     include AllowedUnits
-    allows :ground_units, :air_units
+    allows :air_units
   end
 end

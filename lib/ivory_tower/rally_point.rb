@@ -1,14 +1,13 @@
 module IvoryTower
   class RallyPoint
-    extend AllowedUnits
+    include AllowedUnits
     allows :ground_units, :sea_units, :air_units
 
     def initialize(name)
       @name      = name
-      @occupants = []
     end
 
-    attr_reader :name, :occupants
+    attr_reader :name
 
     def <<(monster)
       occupants << monster
@@ -22,10 +21,6 @@ module IvoryTower
 
     def empty?
       occupants.empty?
-    end
-
-    def bar
-      @name
     end
   end
 end
