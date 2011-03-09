@@ -41,6 +41,11 @@ context "An IvoryTower::Base object" do
     assert_allows_units(base, :air_units, :ground_units, :sea_units)
   end
 
+  test "should not allow towers" do
+    base = IvoryTower::Base.new(10)
+
+    refute_allows_towers(base)
+  end
 
   # hack to replace later
   def new_monster

@@ -43,6 +43,11 @@ context "An IvoryTower::RallyPoint object" do
                                      :sea_units
   end
 
+  test "should not allow towers" do
+    rally_point = IvoryTower::RallyPoint.new("1")
+    refute_allows_towers(rally_point)
+  end
+
   # hack to be replaced later
   def new_monster
     Object.new

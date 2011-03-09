@@ -13,4 +13,10 @@ context "An IvoryTower::Meadow object" do
 
     assert_allows_units(meadow, :air_units, :ground_units)
   end
+
+  test "should not allow towers" do
+    meadow = IvoryTower::Meadow.new
+
+    refute_allows_towers(meadow)
+  end
 end 
