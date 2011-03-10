@@ -1,6 +1,2 @@
 require_relative "ivory_tower/allowed_units"
-require_relative "ivory_tower/base"
-require_relative "ivory_tower/rally_point"
-require_relative "ivory_tower/meadow"
-require_relative "ivory_tower/mountain"
-require_relative "ivory_tower/forest"
+require_relative "ivory_tower/tile"
