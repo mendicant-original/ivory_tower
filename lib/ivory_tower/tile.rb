@@ -3,6 +3,7 @@ require_relative "tile/rally_point"
 require_relative "tile/meadow"
 require_relative "tile/mountain"
 require_relative "tile/forest"
+require_relative "tile/sea"
 
 module IvoryTower
   module Tile
@@ -26,6 +27,10 @@ module IvoryTower
 
     def forest(*a, &b)
       IvoryTower::Tile::Forest.new(*a,&b)
+    end
+
+    def sea(*a, &b)
+      IvoryTower::Tile::Sea.new(*a,&b)
     end
   end
 end
