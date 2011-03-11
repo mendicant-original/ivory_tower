@@ -9,7 +9,10 @@ def context(*args, &block)
   context_class = Class.new(MiniTest::Unit::TestCase) do
     class << self
       def test(name, &block)
-        define_method("test_#{name.gsub(/\W/,'_')}", &block) if block
+        test_method_name = "test_#{name.gsub(/\W/,'_')}"
+        block ||= lambda { skip(name) }
+
+        define_method(test_method_name, &block)
       end
 
       def setup(&block)
