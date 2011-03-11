@@ -8,13 +8,8 @@ module IvoryTower
         @name      = name
       end
 
-      attr_reader :name
-
-      def <<(monster)
-        occupants << monster
-
-        self
-      end
+      attr_reader   :name
+      attr_accessor :map_symbol, :location
 
       def delete(monster)
         occupants.delete(monster)

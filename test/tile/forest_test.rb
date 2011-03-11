@@ -8,10 +8,10 @@ context "An IvoryTower::Forest object" do
     refute forest.occupied?
   end
 
-  test "should allow air and ground units" do
+  test "should allow air units" do
     forest = IvoryTower::Tile.forest
 
-    assert_allows_units(forest, :air_units, :ground_units)
+    assert_allows_units(forest, :air_units)
   end
 
   test "should allow towers" do
@@ -63,8 +63,7 @@ context "An IvoryTower::Forest object" do
     end
   end
 
-  # hack, to be removed later
   def new_tower
-    Object.new
+    stub(:location= => nil)
   end
 end 

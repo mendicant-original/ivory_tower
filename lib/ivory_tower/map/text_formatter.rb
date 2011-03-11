@@ -16,6 +16,12 @@ module IvoryTower
             case tile
             when Tile::Base
               "#{tile.map_symbol}[#{tile.health}]"
+            when Tile::Forest
+              if tile.tower
+                "&(#{tile.occupants.count})"
+              else
+                "#{tile.map_symbol}(#{tile.occupants.count})"
+              end
             else
               "#{tile.map_symbol}(#{tile.occupants.count})"
             end

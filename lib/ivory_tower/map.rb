@@ -12,7 +12,7 @@ module IvoryTower
       # FIXME: Would love to remove the class based dependency here
       # also, bit of a god method here...
       def from_string(string, params)
-        attributes = { base: nil, rally_points: [], forests: [] }
+        attributes = { base: nil, rally_points: {}, forests: [] }
 
         data = string.lines.map.with_index do |line, row_number|
           line.chomp.chars.map.with_index do |symbol, col_number|
@@ -23,7 +23,7 @@ module IvoryTower
               attributes[:base] = tile_class.new(params[:base_health])
             when tile_class == IvoryTower::Tile::RallyPoint
               rally_point = tile_class.new(symbol) 
-              attributes[:rally_points] << rally_point            
+              attributes[:rally_points][symbol] = rally_point            
 
               rally_point
             when tile_class == IvoryTower::Tile::Forest
@@ -35,7 +35,6 @@ module IvoryTower
               tile_class.new
             end
 
-            tile_object.extend(MappableTile)
             tile_object.map_symbol = symbol
             tile_object.location   = [row_number, col_number]
 
@@ -63,10 +62,6 @@ module IvoryTower
       private :new, :tile_class_by_symbol
     end
 
-    module MappableTile
-      attr_accessor :map_symbol, :location
-    end
-
     def initialize(params)
       @tiles        = params[:tiles]
       @base         = params[:base]
@@ -78,6 +73,41 @@ module IvoryTower
 
     def [](row,col)
       @tiles[row][col]
+    end
+    
+    def rows
+      @tiles
+    end
+
+    # Costly, how might we do it better?
+    def columns
+      @tiles_by_columns ||= @tiles.transpose
+    end
+
+    def towers
+      forests.map { |e| e.tower }.compact
+    end
+
+    def neighbors_of(position, params)
+      current_row, current_col = position
+
+      delta = params[:distance] 
+
+      min_row = [current_row - delta, 0].max
+      max_row = [current_row + delta, rows.count - 1].min
+
+      min_col = [current_col - delta, 0].max
+      max_col = [current_col + delta, columns.count - 1].min
+
+      neighbors = []
+
+      (min_row..max_row).each do |row|
+        (min_col..max_col).each do |col|
+          neighbors << self[row,col] unless [row,col] == position
+        end
+      end 
+
+      return neighbors
     end
 
     def each

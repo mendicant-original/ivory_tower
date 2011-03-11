@@ -17,7 +17,7 @@ context "Map" do
     assert 4, map.forests.count
     assert 1, map.rally_points.count
 
-    assert "A", map.rally_points.first.name
+    assert "A", map.rally_points["A"].name
   end
 
   test "#from_file" do

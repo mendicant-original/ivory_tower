@@ -50,6 +50,6 @@ context "An IvoryTower::RallyPoint object" do
 
   # hack to be replaced later
   def new_monster
-    Object.new
+    mock(:location= => nil)
   end
 end

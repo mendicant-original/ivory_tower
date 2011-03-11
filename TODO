@@ -1,0 +1,8 @@
+- IvoryTower::Map is poorly tested.
+- IvoryTower::Map has several opportunities for refactoring.
+- Most tiles are only lightly tested.
+- Text based UI is horrible
+- IvoryTower::Monsters::BlindMouse completely untested
+- IvoryTower::Towers::ArrowTower limited testing
+- Many missing features and validations in core engine
+

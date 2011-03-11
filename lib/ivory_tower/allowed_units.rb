@@ -16,6 +16,13 @@ module IvoryTower
       base.extend(ClassMethods)
     end
 
+    def <<(monster)
+      monster.location = location
+      occupants << monster
+
+      self
+    end
+
     def occupants
       @occupants ||= []
     end

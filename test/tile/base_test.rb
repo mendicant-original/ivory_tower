@@ -49,6 +49,6 @@ context "An IvoryTower::Base object" do
 
   # hack to replace later
   def new_monster
-    Object.new
+    mock(:die => nil)
   end
 end
