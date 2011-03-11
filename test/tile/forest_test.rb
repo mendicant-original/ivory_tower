@@ -1,4 +1,4 @@
-require_relative "test_helper"
+require_relative "../test_helper"
 
 context "An IvoryTower::Forest object" do
   include AllowedUnits::TestHelpers

@@ -1,8 +1,6 @@
 module IvoryTower
   class Map
-    module MappableTile
-      attr_accessor :map_symbol, :location
-    end
+    include Enumerable
 
     class << self
       def from_file(file, params)
@@ -62,7 +60,11 @@ module IvoryTower
 
       private :new, :tile_class_by_symbol
     end
-       
+
+    module MappableTile
+      attr_accessor :map_symbol, :location
+    end
+
     def initialize(params)
       @tiles        = params[:tiles]
       @base         = params[:base]
@@ -74,6 +76,10 @@ module IvoryTower
 
     def [](row,col)
       @tiles[row][col]
+    end
+
+    def each
+      @tiles.flatten.each { |t| yield(t) }
     end
   end
 end
