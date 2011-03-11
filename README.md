@@ -43,6 +43,11 @@ refactoring and extending an existing system.
   evaluate each submission based on the code on your fork, not the original
   codebase.
 
+* You are NOT required to maintain API compatibility with the original
+  system, and may change the engine however you'd like. That said, it'd 
+  be best to make it so that rather than creating one engine per student,
+  you share as much common code as possible with others.
+
 * Currently, the game engine only implements a very rudimentary text based UI,
   and only has a proof of concept event loop. Students are encouraged to work
   together to improve these features so that it's easier to work with the
@@ -64,6 +69,7 @@ refactoring and extending an existing system.
   don't get sucked in, this problem is *much* bigger than what can reasonably be
   done in a few weeks, so just carve off a slice and be sure to leave time for
   your other assignments.
+
 
 * HAVE FUN!
 
