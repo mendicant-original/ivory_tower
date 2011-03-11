@@ -1,3 +1,5 @@
+require_relative "map/text_formatter"
+
 module IvoryTower
   class Map
     include Enumerable
@@ -48,9 +50,9 @@ module IvoryTower
       def tile_class_by_symbol(symbol)
         case symbol
         when "#"        ; Tile::Mountain
-        when "-"        ; Tile::Meadow
-        when "w"        ; Tile::Sea
-        when "^"        ; Tile::Forest
+        when "."        ; Tile::Meadow
+        when "~"        ; Tile::Sea
+        when "*"        ; Tile::Forest
         when "$"        ; Tile::Base
         when /\A[A-Z]\Z/; Tile::RallyPoint
         else

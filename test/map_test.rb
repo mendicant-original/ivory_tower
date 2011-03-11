@@ -2,9 +2,9 @@ require_relative "test_helper"
 require "pp"
 
 trivial_map = <<-END_MAP
-##^^##
-A----$
-##^^##
+##**##
+A....$
+##**##
 END_MAP
 
 context "Map" do
