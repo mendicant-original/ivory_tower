@@ -8,29 +8,28 @@ require_relative "tile/sea"
 module IvoryTower
   module Tile
     extend self
-
     def base(*a,&b)
-      IvoryTower::Tile::Base.new(*a,&b)
+      Base.new(*a,&b)
     end
 
     def rally_point(*a, &b)
-      IvoryTower::Tile::RallyPoint.new(*a,&b)
+      RallyPoint.new(*a,&b)
     end
 
     def meadow(*a, &b)
-      IvoryTower::Tile::Meadow.new(*a,&b)
+      Meadow.new(*a,&b)
     end
 
     def mountain(*a, &b)
-      IvoryTower::Tile::Meadow.new(*a,&b)
+      Mountain.new(*a,&b)
     end
 
     def forest(*a, &b)
-      IvoryTower::Tile::Forest.new(*a,&b)
+      Forest.new(*a,&b)
     end
 
     def sea(*a, &b)
-      IvoryTower::Tile::Sea.new(*a,&b)
+      Sea.new(*a,&b)
     end
   end
 end
