@@ -7,6 +7,10 @@ module IvoryTower
       attr_reader   :tower
       attr_accessor :map_symbol, :location
 
+      def self.terrain_type
+        :forest
+      end
+
       def build_tower(new_tower)
         raise Errors::TowerPresent if tower
 

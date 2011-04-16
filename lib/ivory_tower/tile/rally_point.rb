@@ -8,6 +8,10 @@ module IvoryTower
         @name      = name
       end
 
+      def self.terrain_type
+        :rally_point
+      end
+
       attr_reader   :name
       attr_accessor :map_symbol, :location
 

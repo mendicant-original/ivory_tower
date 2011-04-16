@@ -5,6 +5,10 @@ module IvoryTower
 
       allows :air_units, :ground_units, :sea_units
 
+      def self.terrain_type
+        :base 
+      end
+
       def initialize(health)
         @health = health
       end
