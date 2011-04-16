@@ -6,6 +6,7 @@ map = IvoryTower::Map.from_file(file, base_health: 9)
 current_tick = 0
 
 loop do
+  system "clear"
   puts "Tick: #{current_tick}"
   
   if current_tick % 3 == 0
@@ -34,4 +35,3 @@ loop do
   puts IvoryTower::Map::TextFormatter.new(map)
   sleep 0.25
 end
-
