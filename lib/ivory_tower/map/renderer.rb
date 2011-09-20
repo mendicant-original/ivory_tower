@@ -1,4 +1,4 @@
-require 'chunky_png'
+require 'oily_png'
 
 module IvoryTower
   class Map
@@ -10,20 +10,26 @@ module IvoryTower
       TILE_HEIGHT = 121
       TILE_Y_OFFSET = 50
 
-      def initialize(map,tick)
+      def initialize(map)
         @map = map
-
         create_base_map
-        render_map(tick)
       end
 
+      def draw_map(tick)
+        render_map(tick)
+        save_to_file(tick)
+      end
+      
       def render_map(filename)
         render_tiles
-        save_to_file(filename)
       end
 
       def save_to_file(filename)
         @png.save("#{filename}.png", :fast_rgba)
+      end
+
+      def save_to_movie
+        system('ffmpeg -i %d.png game.mov')
       end
 
       def create_base_map

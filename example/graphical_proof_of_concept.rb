@@ -4,8 +4,10 @@ file = "#{File.dirname(__FILE__)}/../data/maps/simple.txt"
 map = IvoryTower::Map.from_file(file, base_health: 9)
 
 current_tick = 0
+renderer = IvoryTower::Map::Renderer.new(map)
 
 loop do
+
   system "clear"
   puts "Tick: #{current_tick}"
   
@@ -33,7 +35,11 @@ loop do
 
   current_tick += 1
 
-  break if current_tick > 1
-  IvoryTower::Map::Renderer.new(map,current_tick)
+  break if current_tick > 100
+  
+  renderer.draw_map(current_tick)
 
 end
+
+renderer.save_to_movie 
+
