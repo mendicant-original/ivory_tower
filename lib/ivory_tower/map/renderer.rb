@@ -4,7 +4,7 @@ module IvoryTower
   class Map
     module Renderer
 
-      attr_accessor :map
+      attr_reader :map
 
       TILE_WIDTH    = 33
       TILE_HEIGHT   = 40
