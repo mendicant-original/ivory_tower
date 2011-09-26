@@ -1,3 +1,6 @@
+# The 'ray' gem needs to be installed for this to work
+# 
+
 require 'ray'
 require_relative "../lib/ivory_tower"
 
