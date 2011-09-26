@@ -2,151 +2,84 @@ require 'oily_png'
 
 module IvoryTower
   class Map
-    class Renderer
+    module Renderer
 
       attr_accessor :map
 
-      TILE_WIDTH  = 101
-      TILE_HEIGHT = 121
-      TILE_Y_OFFSET = 50
+      TILE_WIDTH    = 33
+      TILE_HEIGHT   = 40
+      TILE_Y_OFFSET = 15
+
+      TILESET = { monster:  "bug",
+                  grass:    "grass",
+                  mountain: "brown_block",
+                  meadow:   "dirt",
+                  sea:      "water",
+                  rally:    "star",
+                  stone:    "stone",
+                  tower:    "gem_orange",
+                  wood:     "wood",
+                  forest:   "bush"
+                }
 
       def initialize(map)
         @map = map
-        create_base_map
       end
 
-      def draw_map(tick)
-        render_map(tick)
-        save_to_file(tick)
+      def draw_map(tick, &blk)
+        @map.tiles.collect.with_index do |row, y|
+          row.collect.with_index do |tile, x|
+            symbol = symbol_tile(tile.map_symbol)
+            render_to_map(symbol, tile, x, y, blk)
+          end
+        end        
       end
       
-      def render_map(filename)
-        render_tiles
-      end
-
-      def save_to_file(filename)
-        @png.save("#{filename}.png", :fast_rgba)
-      end
-
-      def save_to_movie
-        system('ffmpeg -i %d.png game.mov')
-      end
-
-      def create_base_map
-        @png = ChunkyPNG::Image.new(map_width, map_height, ChunkyPNG::Color::PREDEFINED_COLORS[:green])
-      end
-
-      def render_tiles
-        @map.tiles.collect.with_index do |row,y|
-          row.collect.with_index do |tile,x|
-            draw_tile(x,y,tile)
-          end
-        end
-      end
-
-      def draw_tile(x,y,tile)
+      def render_to_map(symbol, tile, x, y, blk)   
         case tile
         when Tile::Base
-          draw_grass(x,y)
-          draw_monster(x,y) if tile.occupied?
+          draw_to_map(x, y, tile(:grass), tile, blk)
         when Tile::Forest
-          if tile.tower
-            draw_tower(x,y)
-            draw_monster(x,y) if tile.occupied?
-          else
-            draw_forest(x,y)
-            draw_monster(x,y) if tile.occupied?
-          end
+          draw_to_map(x, y, tile(:grass), tile, blk)
+          draw_to_map(x, y, tile(:forest), tile, blk)
+          draw_to_map(x, y, tile(:tower), tile, blk) if tile.tower
         else
-          draw_symbol(x,y,tile.map_symbol)
-          draw_monster(x,y) if tile.occupied?
+          draw_to_map(x, y, symbol, tile, blk)
         end            
+        draw_to_map(x, y, tile(:monster), tile, blk) if tile.occupied?
       end
 
-      def draw_monster(x,y)
-        tile = tile_for("bug")
-        draw_to_map(x, y, tile)        
+      def tile(symbol)
+        tile_for(TILESET[symbol])
       end
 
-      def draw_grass(x, y)
-        tile = tile_for("grass")
-        draw_to_map(x, y, tile)
+      def map_width
+        @map.columns.size * TILE_WIDTH
       end
 
-      def draw_mountain(x, y)
-        tile = tile_for("dirt")
-        draw_to_map(x, y, tile)
-      end
-
-      def draw_meadow(x, y)
-        tile = tile_for("brown_block")
-        draw_to_map(x, y, tile)      
-      end
-
-      def draw_sea(x, y)
-        tile = tile_for("water")
-        draw_to_map(x, y, tile)      
-      end
-
-      def draw_rally(x,y)
-        tile = tile_for("star")
-        draw_stone(x,y)
-        draw_to_map(x, y, tile,true)            
-      end
-
-      def draw_stone(x,y)
-        tile = tile_for("stone")
-        draw_to_map(x, y, tile)            
-      end
-
-      def draw_tower(x,y)
-        tile = tile_for("wall")
-        draw_to_map(x, y, tile)        
-      end
-
-      def draw_wood(x,y)
-        tile = tile_for("wood")
-        draw_to_map(x, y, tile)        
-      end
-
-      def draw_forest(x, y)
-        tile = tile_for("bush")
-        draw_grass(x, y)
-        draw_to_map(x, y, tile,true)
+      def map_height
+        @map.rows.size * TILE_HEIGHT
       end
 
       private
 
-      def draw_symbol(x,y,symbol)
+      def symbol_tile(symbol)
         case symbol
-        when "#"        ; draw_mountain(x, y)
-        when "."        ; draw_meadow(x, y)
-        when "~"        ; draw_sea(x, y)
-        when "*"        ; draw_forest(x, y)
-        when "$"        ; draw_grass(x, y)
-        when /\A[A-Z]\Z/; draw_rally(x, y)
+        when "#"        ; tile(:mountain)
+        when "."        ; tile(:meadow)
+        when "~"        ; tile(:sea)
+        when "*"        ; tile(:forest)
+        when "$"        ; tile(:grass)
+        when /\A[A-Z]\Z/; tile(:rally)
         end
       end      
 
-      def tile_for(name)
-        ChunkyPNG::Image.from_file("data/tiles/#{name}.png")
+      def adjusted_x(x)
+        x * TILE_WIDTH
       end
 
-      def draw_to_map(x,y,tile,over=false)
-        pos_x = x*TILE_WIDTH
-        pos_y = y*TILE_HEIGHT - TILE_Y_OFFSET
-
-        pos_y -= TILE_Y_OFFSET*2 if over
-
-        @png.compose!(tile, x*TILE_WIDTH, y*TILE_HEIGHT-TILE_Y_OFFSET)
-      end
-
-      def map_width
-        @map.columns.size*TILE_WIDTH
-      end
-
-      def map_height
-        @map.rows.size*TILE_HEIGHT
+      def adjusted_y(y)
+        y * TILE_HEIGHT - TILE_Y_OFFSET
       end
 
     end

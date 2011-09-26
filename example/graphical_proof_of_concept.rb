@@ -1,15 +1,17 @@
+# requires 'ffmpeg' to be installed
+
 require_relative "../lib/ivory_tower"
 
 file = "#{File.dirname(__FILE__)}/../data/maps/simple.txt"
 map = IvoryTower::Map.from_file(file, base_health: 9)
 
 current_tick = 0
-renderer = IvoryTower::Map::Renderer.new(map)
+renderer = IvoryTower::Map::PNGRenderer.new(map)
+renderer.create_base_map
 
 loop do
 
   system "clear"
-  puts "Tick: #{current_tick}"
   
   if current_tick % 3 == 0
     map.rally_points["A"] << IvoryTower::Monsters::BlindMouse.new(map)
@@ -38,6 +40,7 @@ loop do
   break if current_tick > 100
   
   renderer.draw_map(current_tick)
+  renderer.save_to_file(current_tick)
 
 end
 
