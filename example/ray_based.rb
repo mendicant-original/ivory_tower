@@ -39,11 +39,15 @@ end
 def update_texts(tile, win, x, y)
   case tile
     when IvoryTower::Tile::Base
-      health = tile.health.to_s
-      win.draw text(health, :size => 10, :at => [x, y + 40])
+      if tile.health > 0
+        health = tile.health.to_s
+        win.draw text(health, :size => 10, :at => [x, y + 40]) 
+      end
     else
-      count = tile.occupants.count.to_s
-      win.draw text(count, :size => 10, :at => [x + 20, y + 40])
+      if tile.occupants.count > 0
+        count = tile.occupants.count.to_s
+        win.draw text(count, :size => 10, :at => [x + 20, y + 40])
+      end
     end
 end
 
