@@ -61,7 +61,7 @@ Ray.game "Ivory Tower!",:size => [renderer.map_width, renderer.map_height] do
     render do |win|  
       renderer.draw_map(current_tick) do |tile, place, x, y|
 
-        win.draw sprite(tile,at: Ray::Vector2[x, y])
+        win.draw sprite(tile, at: Ray::Vector2[x, y])
         update_texts(place, win, x, y)
       end
       win.draw @text

@@ -6,7 +6,7 @@ module IvoryTower
       include Renderer
 
       def tile_for(name)
-        "data/tiles/#{name}.png"
+        File.join(File.dirname(__FILE__), "/../../../data/tiles/#{name}.png")
       end
 
       def draw_to_map(x, y, tile, renderable, blk)
