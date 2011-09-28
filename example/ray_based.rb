@@ -44,7 +44,7 @@ def update_texts(tile, win, x, y)
         win.draw text(health, :size => 10, :at => [x, y + 40]) 
       end
     else
-      if tile.occupants.count > 0
+      unless tile.occupants.empty?
         count = tile.occupants.count.to_s
         win.draw text(count, :size => 10, :at => [x + 20, y + 40])
       end
