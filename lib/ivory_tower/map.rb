@@ -1,4 +1,7 @@
 require_relative "map/text_formatter"
+require_relative "map/renderer"
+require_relative "map/png_renderer"
+require_relative "map/ray_renderer"
 
 module IvoryTower
   class Map
